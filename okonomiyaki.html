@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shrimp & Bacon Okonomiyaki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #1a1a1a;
+      --paper:     #f7f4ee;
+      --rule:      #d4cfc4;
+      --accent:    #c1440e;
+      --muted:     #7a7468;
+      --step-bg:   #edeae3;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .card {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      border-top: 3px solid var(--ink);
+      padding-top: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1.5rem;
+    }
+
+    /* Meta row */
+    .meta {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+    }
+
+    .meta-item span {
+      display: block;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.2rem;
+    }
+
+    .meta-item strong {
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+
+    /* Section headings */
+    h2 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* Ingredients */
+    .ingredients {
+      margin-bottom: 2.5rem;
+    }
+
+    .ingredient-list {
+      list-style: none;
+    }
+
+    .ingredient-list li {
+      display: flex;
+      gap: 1rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.95rem;
+      align-items: baseline;
+    }
+
+    .ingredient-list li:last-child {
+      border-bottom: none;
+    }
+
+    .amount {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    /* Steps */
+    .steps {
+      margin-bottom: 2.5rem;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 0 1rem;
+      margin-bottom: 1.25rem;
+      align-items: start;
+    }
+
+    .step-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--accent);
+      line-height: 1.2;
+      text-align: right;
+    }
+
+    .step-content {
+      background: var(--step-bg);
+      padding: 0.85rem 1rem;
+    }
+
+    .step-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .step-body {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .timer {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      background: white;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--accent);
+    }
+
+    /* Notes */
+    .notes {
+      background: white;
+      border-left: 3px solid var(--accent);
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 3rem;
+      border-top: 1px solid var(--rule);
+      padding-top: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--rule);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="header">
+      <div class="eyebrow">Japanese Savory Pancake</div>
+      <h1>Shrimp &amp; Bacon Okonomiyaki</h1>
+      <p class="subtitle">Adapted from Serious Eats / J. Kenji López-Alt &mdash; halved for one generous serving</p>
+    </div>
+
+    <div class="meta">
+      <div class="meta-item">
+        <span>Serves</span>
+        <strong>1</strong>
+      </div>
+      <div class="meta-item">
+        <span>Active time</span>
+        <strong>~15 min</strong>
+      </div>
+      <div class="meta-item">
+        <span>Cook time</span>
+        <strong>~20 min</strong>
+      </div>
+      <div class="meta-item">
+        <span>Pan</span>
+        <strong>10" nonstick</strong>
+      </div>
+    </div>
+
+    <div class="ingredients">
+      <h2>Ingredients</h2>
+      <ul class="ingredient-list">
+        <li><span class="amount">2 packed cups</span> cabbage, finely shredded</li>
+        <li><span class="amount">1</span> large egg</li>
+        <li><span class="amount">¼ cup</span> cold water</li>
+        <li><span class="amount">⅜ cup</span> all-purpose flour</li>
+        <li><span class="amount">4 oz</span> bacon, chopped</li>
+        <li><span class="amount">4 oz</span> shrimp, peeled, deveined, roughly chopped</li>
+        <li><span class="amount">¼</span> red onion, diced</li>
+        <li><span class="amount">to serve</span> mayo (optional)</li>
+      </ul>
+    </div>
+
+    <div class="steps">
+      <h2>Method</h2>
+
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <div class="step-title">Make the batter</div>
+          <div class="step-body">Combine cabbage, egg, water, and flour in a large bowl. Beat heavily with a fork until a thick, bubbly batter forms. Set aside.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <div class="step-title">Cook bacon</div>
+          <div class="step-body">Add chopped bacon to a 10-inch nonstick skillet over medium heat. Cook until nearly crisp, about 6&ndash;7 minutes.</div>
+          <div class="timer">⏱ ~7 min</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <div class="step-title">Add shrimp and onion</div>
+          <div class="step-body">Add shrimp and red onion to the pan. Cook, stirring occasionally, until shrimp is just pink and onion has softened slightly, about 2&ndash;3 minutes.</div>
+          <div class="timer">⏱ ~3 min</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <div class="step-title">Add batter and cook first side</div>
+          <div class="step-body">Pour batter over the mix-ins and spread into an even layer with a fork. Cover and cook, shaking the pan occasionally, until the bottom is crisp and well browned, about 10 minutes. Lower heat if it starts to burn.</div>
+          <div class="timer">⏱ ~10 min</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <div class="step-title">Flip and finish</div>
+          <div class="step-body">Drain any excess fat. Flip with a wide spatula &mdash; run it around the edges first to loosen. Return to heat, cover, and cook until the second side is browned and the center is set but still a little custardy, about 8 minutes.</div>
+          <div class="timer">⏱ ~8 min</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">6</div>
+        <div class="step-content">
+          <div class="step-title">Serve</div>
+          <div class="step-body">Transfer to a plate and serve immediately. Top with mayo if you like.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="notes">
+      <strong>Note:</strong> The flip is the trickiest part. Run a flexible spatula around the edges to loosen before going for it. A wide spatula works fine here &mdash; no need for the lid method the original recipe calls for.
+    </div>
+
+    <div class="footer">recipe card &mdash; shrimp &amp; bacon okonomiyaki</div>
+
+  </div>
+</body>
+</html>
