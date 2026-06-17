@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pork Meatball Vindaloo</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:    #FFFFFF;
+      --stone:    #F7F5F2;
+      --fog:      #E8E4DF;
+      --ash:      #9E9890;
+      --ink:      #1C1C1A;
+      --sage:     #5C7A62;
+      --sage-lt:  #EAF0EB;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 32px 80px;
+    }
+
+    /* ── Header ── */
+    .recipe-header {
+      border-bottom: 1px solid var(--fog);
+      padding-bottom: 32px;
+      margin-bottom: 40px;
+    }
+
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 12px;
+    }
+
+    .recipe-title {
+      font-family: var(--font-display);
+      font-size: 42px;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .recipe-subtitle {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-style: italic;
+      color: var(--sage);
+      margin-bottom: 16px;
+    }
+
+    .recipe-desc {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ash);
+      max-width: 520px;
+      line-height: 1.65;
+    }
+
+    /* ── Meta row ── */
+    .meta-row {
+      display: flex;
+      gap: 0;
+      margin-bottom: 40px;
+      border: 1px solid var(--fog);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .meta-item {
+      flex: 1;
+      padding: 16px 20px;
+      border-right: 1px solid var(--fog);
+    }
+
+    .meta-item:last-child {
+      border-right: none;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ash);
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--fog);
+    }
+
+    /* ── Ingredients ── */
+    .ingredients-section {
+      margin-bottom: 48px;
+    }
+
+    .ingredient-group {
+      margin-bottom: 28px;
+    }
+
+    .ingredient-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .group-name {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 12px;
+    }
+
+    .ingredient-list {
+      list-style: none;
+    }
+
+    .ingredient-list li {
+      display: flex;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--fog);
+      font-size: 15px;
+      font-weight: 300;
+      align-items: baseline;
+    }
+
+    .ingredient-list li:last-child {
+      border-bottom: none;
+    }
+
+    .amount {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ash);
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+
+    /* ── Steps ── */
+    .steps-section {
+      margin-bottom: 48px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 0 20px;
+      margin-bottom: 4px;
+    }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--fog);
+      line-height: 1.3;
+      text-align: right;
+      padding-top: 16px;
+    }
+
+    .step-body {
+      padding: 16px 20px;
+      background: var(--stone);
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .step-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 6px;
+    }
+
+    .step-text {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    .timer-badge {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sage);
+      background: var(--sage-lt);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    /* ── Notes ── */
+    .notes-section {
+      background: var(--stone);
+      border-radius: 6px;
+      border-left: 3px solid var(--sage);
+      padding: 20px 24px;
+      margin-bottom: 48px;
+    }
+
+    .notes-heading {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 8px;
+    }
+
+    .notes-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--ash);
+    }
+
+    /* ── Footer ── */
+    .recipe-footer {
+      border-top: 1px solid var(--fog);
+      padding-top: 20px;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--fog);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 560px) {
+      .page { padding: 40px 20px 60px; }
+      .recipe-title { font-size: 30px; }
+      .meta-row { flex-wrap: wrap; }
+      .meta-item { flex: 1 1 45%; border-bottom: 1px solid var(--fog); }
+      .meta-item:nth-child(3), .meta-item:nth-child(4) { border-bottom: none; }
+      .step { grid-template-columns: 28px 1fr; gap: 0 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <div class="recipe-header">
+      <div class="eyebrow">Indian · Mains</div>
+      <h1 class="recipe-title">Pork Meatball Vindaloo</h1>
+      <p class="recipe-subtitle">Bold, warming, deeply spiced.</p>
+      <p class="recipe-desc">A classic Goan vindaloo base — built from scratch with whole toasted spices and a caramelized onion paste — wrapped around tender pork meatballs and finished with sweet peppers and grape tomatoes.</p>
+    </div>
+
+    <!-- Meta -->
+    <div class="meta-row">
+      <div class="meta-item">
+        <div class="meta-label">Serves</div>
+        <div class="meta-value">4</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Prep</div>
+        <div class="meta-value">30 min</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Cook</div>
+        <div class="meta-value">35 min</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Difficulty</div>
+        <div class="meta-value">Medium</div>
+      </div>
+    </div>
+
+    <!-- Ingredients -->
+    <div class="ingredients-section">
+      <div class="section-label">Ingredients</div>
+
+      <div class="ingredient-group">
+        <div class="group-name">Spice Base</div>
+        <ul class="ingredient-list">
+          <li><span class="amount">2 tsp</span> whole cumin seeds, lightly toasted</li>
+          <li><span class="amount">1 tsp</span> whole black peppercorns, lightly toasted</li>
+          <li><span class="amount">1½ tsp</span> coriander seeds, lightly toasted</li>
+          <li><span class="amount">¾ tsp</span> ground cardamom</li>
+          <li><span class="amount">¾ tsp</span> ground fenugreek</li>
+          <li><span class="amount">1 tsp</span> whole black mustard seeds, lightly toasted</li>
+          <li><span class="amount">¼ tsp</span> ground cinnamon</li>
+          <li><span class="amount">1 tsp</span> turmeric</li>
+          <li><span class="amount">1 tsp</span> ancho chile powder</li>
+          <li><span class="amount">1 tsp</span> kosher salt</li>
+          <li><span class="amount">1 tsp</span> light brown sugar</li>
+          <li><span class="amount">5 tbsp</span> white wine vinegar</li>
+          <li><span class="amount">3 tbsp</span> vegetable oil</li>
+          <li><span class="amount">1 large</span> yellow onion, finely chopped</li>
+          <li><span class="amount">1-inch piece</span> fresh ginger, peeled and finely chopped</li>
+          <li><span class="amount">8 cloves</span> garlic, minced</li>
+        </ul>
+      </div>
+
+      <div class="ingredient-group">
+        <div class="group-name">Meatballs</div>
+        <ul class="ingredient-list">
+          <li><span class="amount">¾ cup</span> day-old bread, cut into 1-inch cubes</li>
+          <li><span class="amount">1 cup</span> milk</li>
+          <li><span class="amount">1 lb</span> ground pork</li>
+          <li><span class="amount">1</span> egg, lightly beaten</li>
+          <li><span class="amount">1 clove</span> garlic, minced</li>
+          <li><span class="amount">½ tsp</span> lemon zest</li>
+          <li><span class="amount">to taste</span> kosher salt</li>
+        </ul>
+      </div>
+
+      <div class="ingredient-group">
+        <div class="group-name">Vindaloo</div>
+        <ul class="ingredient-list">
+          <li><span class="amount">1 can (14.5 oz)</span> diced tomatoes, preferably fire-roasted</li>
+          <li><span class="amount">1 small</span> red bell pepper, thinly sliced</li>
+          <li><span class="amount">1 small</span> yellow bell pepper, thinly sliced</li>
+          <li><span class="amount">1 large</span> jalapeño, thinly sliced</li>
+          <li><span class="amount">½ cup</span> grape tomatoes</li>
+          <li><span class="amount">1½ tbsp</span> fresh cilantro, minced</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps-section">
+      <div class="section-label">Method</div>
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Grind the spices</div>
+          <div class="step-text">Using a mortar and pestle or spice grinder, grind the cumin seeds, peppercorns, coriander seeds, and black mustard seeds until fine. Transfer to a small bowl and stir in the ground cardamom, ground fenugreek, cinnamon, turmeric, chile powder, salt, brown sugar, and vinegar. Set aside.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Build the paste</div>
+          <div class="step-text">Heat vegetable oil in a sauté pan over medium heat until shimmering. Add onions and cook, stirring often, until browned and crisp around the edges, about 12 minutes. Add ginger and garlic and cook 2 minutes more. Transfer to a blender and purée until smooth, adding water a tablespoon at a time until a paste forms. Stir into the spice mixture.</div>
+          <span class="timer-badge">⏱ ~14 min</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Make the meatballs</div>
+          <div class="step-text">Combine bread cubes and milk in a large bowl and let stand for 10 minutes. Drain, squeezing the bread dry; discard the milk. Mix the soaked bread thoroughly with the pork, egg, garlic, and lemon zest. Season with salt. Using wet hands, form the mixture into 10 golf-ball-sized balls.</div>
+          <span class="timer-badge">⏱ 10 min soak</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Simmer the meatballs</div>
+          <div class="step-text">Warm about 4 tablespoons of the spice base in a large pot over medium-low heat. Add the canned tomatoes with their juices and stir to combine — taste and add more vindaloo paste and salt if needed. Gently nestle the meatballs into the sauce and simmer, basting periodically, for 10 minutes.</div>
+          <span class="timer-badge">⏱ ~10 min</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Add the vegetables</div>
+          <div class="step-text">Gently stir in the red and yellow bell peppers, jalapeño, and grape tomatoes. Continue cooking until the vegetables are just tender and the meatballs are cooked through, about 5 minutes more.</div>
+          <span class="timer-badge">⏱ ~5 min</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-title">Serve</div>
+          <div class="step-text">Ladle into bowls and finish with a scattering of fresh cilantro. Flatbread or basmati rice alongside if you want something to soak up the sauce.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Notes -->
+    <div class="notes-section">
+      <div class="notes-heading">Notes</div>
+      <p class="notes-text">The spice base makes more than you need — leftovers keep refrigerated for a week and work beautifully as a marinade for chicken or lamb. Ground cardamom and fenugreek are used here in place of the whole seeds: add them directly to the spice bowl without toasting. The paste's heat level is moderate; add a second jalapeño or leave the seeds in if you want more bite.</p>
+    </div>
+
+    <div class="recipe-footer">pork meatball vindaloo — adapted from serious eats</div>
+
+  </div>
+</body>
+</html>
