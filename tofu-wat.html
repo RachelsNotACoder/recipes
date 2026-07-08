@@ -1,345 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tofu W'at</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tofu W'at — Rachel's Recipes</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-white:     #FFFFFF; /* Canvas background */
+  --color-stone:     #F7F5F2; /* Alternate sections, card boxes */
+  --color-fog:       #E8E4DF; /* Clean lines, horizontal dividers */
+  --color-ink:       #1C1C1A; /* Primary text, headers */
+  --color-ash:       #9E9890; /* Secondary metadata, list subtext */
 
-    :root {
-      --white:    #FFFFFF;
-      --stone:    #F7F5F2;
-      --fog:      #E8E4DF;
-      --ash:      #9E9890;
-      --ink:      #1C1C1A;
-      --sage:     #5C7A62;
-      --sage-lt:  #EAF0EB;
-      --font-display: 'DM Serif Display', Georgia, serif;
-      --font-body:    'DM Sans', system-ui, sans-serif;
-    }
+  --color-sage:      #5C7A62; /* Tag accent */
+  --color-sage-lt:   #EAF0EB;
+  --color-brick:     #8C3B32; /* Primary header background & action element */
+  --color-brick-lt:  #F7EBEA;
 
-    body {
-      font-family: var(--font-body);
-      background: var(--white);
-      color: var(--ink);
-      font-size: 16px;
-      line-height: 1.6;
-    }
+  --font-display:    'DM Serif Display', Georgia, serif;
+  --font-body:       'DM Sans', system-ui, sans-serif;
 
-    .page {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 80px 32px 80px;
-    }
+  --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px;
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --transition: 0.2s ease-in-out;
+}
 
-    /* ── Header ── */
-    .recipe-header {
-      border-bottom: 1px solid var(--fog);
-      padding-bottom: 32px;
-      margin-bottom: 40px;
-    }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-white);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+:focus-visible { outline: 2px solid var(--color-brick); outline-offset: 2px; }
 
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ash);
-      margin-bottom: 12px;
-    }
+/* Brick Header */
+.site-header {
+  background: var(--color-brick);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.header-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  text-decoration: none;
+}
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-stone);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.nav-link:hover { color: var(--color-white); }
 
-    .recipe-title {
-      font-family: var(--font-display);
-      font-size: 42px;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 10px;
-    }
+/* Template B: Recipe Detail Page */
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+}
 
-    .recipe-subtitle {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-style: italic;
-      color: var(--sage);
-      margin-bottom: 16px;
-    }
+.recipe-main-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-bottom: var(--space-lg);
+}
 
-    .recipe-desc {
-      font-size: 15px;
-      font-weight: 300;
-      color: var(--ash);
-      max-width: 520px;
-      line-height: 1.65;
-    }
+/* Feature Block Styling */
+.metadata-feature-card {
+  background: var(--color-stone);
+  border: 1px solid var(--color-fog);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.meta-item-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-fog);
+  padding-bottom: var(--space-xs);
+}
+.meta-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ash);
+}
+.meta-value {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.text-sage { color: var(--color-sage); }
 
-    /* ── Meta row ── */
-    .meta-row {
-      display: flex;
-      gap: 0;
-      margin-bottom: 40px;
-      border: 1px solid var(--fog);
-      border-radius: 6px;
-      overflow: hidden;
-    }
+/* Multi-Tag Container System */
+.meta-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.recipe-inline-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-sage);
+  background: var(--color-sage-lt);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+.recipe-inline-tag svg,
+.recipe-inline-tag [data-lucide] {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5px;
+}
 
-    .meta-item {
-      flex: 1;
-      padding: 16px 20px;
-      border-right: 1px solid var(--fog);
-    }
+/* Servings Scaler Subcomponent */
+.yield-scaler {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.scale-controls { display: flex; align-items: center; gap: var(--space-md); }
+.btn-scale {
+  background: transparent; border: none; font-size: 16px; cursor: pointer;
+  width: 24px; height: 24px; color: var(--color-ink);
+}
+.btn-scale:hover { color: var(--color-brick); }
+.scale-qty { font-weight: 500; font-size: 14px; min-width: 16px; text-align: center; }
 
-    .meta-item:last-child { border-right: none; }
+/* Article Text Bodies */
+.recipe-description {
+  font-size: 15px;
+  color: var(--color-ink);
+  margin-bottom: var(--space-xl);
+  font-style: italic;
+}
+.recipe-section { margin-bottom: var(--space-xl); }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
 
-    .meta-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ash);
-      margin-bottom: 4px;
-    }
+/* Ingredients Checklist Mechanics */
+.ingredients-list { list-style: none; }
+.ingredients-list li { margin-bottom: var(--space-md); }
+.ingredient-label { display: flex; align-items: flex-start; gap: var(--space-md); cursor: pointer; position: relative; }
+.ingredient-checkbox { position: absolute; opacity: 0; width: 0; height: 0; }
+.chk-custom {
+  width: 18px; height: 18px; border: 1px solid var(--color-fog);
+  border-radius: var(--radius-sm); background: var(--color-white);
+  margin-top: 2px; flex-shrink: 0; transition: all var(--transition);
+}
+.ingredient-checkbox:checked + .chk-custom { background: var(--color-sage-lt); border-color: var(--color-sage); }
+.ingredient-checkbox:checked ~ .ingredient-text { color: var(--color-ash); text-decoration: line-through; }
+.ingredient-text { font-size: 15px; color: var(--color-ink); }
 
-    .meta-value {
-      font-family: var(--font-display);
-      font-size: 18px;
-      color: var(--ink);
-    }
+/* Preparation Steps Lists */
+.instructions-list { list-style: none; }
+.instructions-list li { display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); }
+.step-number {
+  font-family: var(--font-body); font-size: 12px; font-weight: 700;
+  color: var(--color-brick); margin-top: 3px;
+}
+.step-text { font-size: 15px; color: var(--color-ink); }
 
-    /* ── Section label ── */
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ash);
-      font-weight: 500;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--fog);
-    }
-
-    /* ── Ingredients ── */
-    .ingredients-section {
-      margin-bottom: 48px;
-    }
-
-    .ingredient-list {
-      list-style: none;
-    }
-
-    .ingredient-list li {
-      display: flex;
-      gap: 16px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--fog);
-      font-size: 15px;
-      font-weight: 300;
-      align-items: baseline;
-    }
-
-    .ingredient-list li:last-child { border-bottom: none; }
-
-    .amount {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ash);
-      min-width: 100px;
-      flex-shrink: 0;
-    }
-
-    /* ── Steps ── */
-    .steps-section {
-      margin-bottom: 48px;
-    }
-
-    .step {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 0 20px;
-      margin-bottom: 4px;
-    }
-
-    .step-num {
-      font-family: var(--font-display);
-      font-size: 28px;
-      color: var(--fog);
-      line-height: 1.3;
-      text-align: right;
-      padding-top: 16px;
-    }
-
-    .step-body {
-      padding: 16px 20px;
-      background: var(--stone);
-      border-radius: 6px;
-      margin-bottom: 8px;
-    }
-
-    .step-title {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 6px;
-    }
-
-    .step-text {
-      font-size: 15px;
-      font-weight: 300;
-      line-height: 1.65;
-      color: var(--ink);
-    }
-
-    .timer-badge {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--sage);
-      background: var(--sage-lt);
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    /* ── Notes ── */
-    .notes-section {
-      background: var(--stone);
-      border-radius: 6px;
-      border-left: 3px solid var(--sage);
-      padding: 20px 24px;
-      margin-bottom: 48px;
-    }
-
-    .notes-heading {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 8px;
-    }
-
-    .notes-text {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 1.65;
-      color: var(--ash);
-    }
-
-    /* ── Footer ── */
-    .recipe-footer {
-      border-top: 1px solid var(--fog);
-      padding-top: 20px;
-      font-size: 12px;
-      font-weight: 300;
-      color: var(--fog);
-      letter-spacing: 0.04em;
-    }
-
-    @media (max-width: 560px) {
-      .page { padding: 40px 20px 60px; }
-      .recipe-title { font-size: 30px; }
-      .meta-row { flex-wrap: wrap; }
-      .meta-item { flex: 1 1 45%; border-bottom: 1px solid var(--fog); }
-      .step { grid-template-columns: 28px 1fr; gap: 0 12px; }
-    }
-  </style>
+/* Tips list, styled to match Template B section conventions */
+.tips-list { list-style: none; }
+.tips-list li {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-stone);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+.tips-list li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-sage);
+  margin-top: 8px;
+}
+</style>
 </head>
 <body>
-  <div class="page">
 
-    <div class="recipe-header">
-      <div class="eyebrow">Ethiopian · Mains · Vegan</div>
-      <h1 class="recipe-title">Tofu W'at</h1>
-      <p class="recipe-subtitle">Rich, smoky, deeply spiced.</p>
-      <p class="recipe-desc">Berbere-braised tofu in the tradition of Doro W'at — same bold spice foundation, same deep color, swapping chicken for tofu with results that hold up beautifully.</p>
-    </div>
-
-    <div class="meta-row">
-      <div class="meta-item">
-        <div class="meta-label">Serves</div>
-        <div class="meta-value">4–6</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Active</div>
-        <div class="meta-value">~15 min</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Cook</div>
-        <div class="meta-value">~30 min</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Difficulty</div>
-        <div class="meta-value">Easy</div>
-      </div>
-    </div>
-
-    <div class="ingredients-section">
-      <div class="section-label">Ingredients</div>
-      <ul class="ingredient-list">
-        <li><span class="amount">1 package</span> extra firm tofu, cut into ½-inch cubes</li>
-        <li><span class="amount">2 cups</span> sweet onion, finely diced</li>
-        <li><span class="amount">¼ cup</span> berbere</li>
-        <li><span class="amount">1 tsp</span> ground cardamom</li>
-        <li><span class="amount">1 tsp</span> garlic powder</li>
-        <li><span class="amount">½ tbsp</span> fresh ginger, finely grated</li>
-        <li><span class="amount">1 tsp</span> fenugreek powder</li>
-        <li><span class="amount">2 cups</span> vegetable broth</li>
-        <li><span class="amount">2 tbsp</span> butter or canola oil</li>
-        <li><span class="amount">½–1 tsp</span> salt, to taste</li>
-      </ul>
-    </div>
-
-    <div class="steps-section">
-      <div class="section-label">Method</div>
-
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Cook the onions</div>
-          <div class="step-text">Place the onion, berbere, cardamom, garlic powder, ginger, fenugreek, and butter or oil in a nonstick wok or large skillet. Cook over medium heat, stirring often, until the onions have softened, about 5–7 minutes.</div>
-          <span class="timer-badge">⏱ 5–7 min</span>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Add tofu and broth</div>
-          <div class="step-text">Add the tofu and vegetable broth and stir until everything is well combined. Bring to a boil, then reduce heat to medium.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Braise until thick</div>
-          <div class="step-text">Cook uncovered for 20–25 minutes, stirring occasionally to prevent sticking. The sauce is ready when it clings to the back of a wooden spoon. Season with salt to taste — some berbere blends already contain salt, so taste before adding.</div>
-          <span class="timer-badge">⏱ 20–25 min</span>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="notes-section">
-      <div class="notes-heading">Notes</div>
-      <p class="notes-text">Berbere varies a lot by brand — some are saltier or hotter than others. Taste yours before you start and adjust accordingly. If you can find it, a good store-bought berbere is the biggest flavor lever in this dish. Great served over rice or with flatbread to soak up the sauce.</p>
-    </div>
-
-    <div class="recipe-footer">tofu w'at — adapted from parsley in my teeth</div>
-
+<header class="site-header">
+  <div class="header-container">
+    <a href="/" class="site-logo">Rachel's Recipes</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Index</a>
+    </nav>
   </div>
+</header>
+
+<main class="main-content">
+  <article class="recipe-detail">
+    <!-- Header Title -->
+    <h1 class="recipe-main-title">Tofu W'at</h1>
+
+    <!-- Hero Metadata Feature Card Block -->
+    <div class="metadata-feature-card">
+      <div class="meta-item-group">
+        <span class="meta-label">Prep / Total</span>
+        <span class="meta-value">15m / 45m</span>
+      </div>
+      <div class="meta-item-group modifiers-row">
+        <span class="meta-label">Tags</span>
+        <div class="meta-tags-list">
+          <span class="recipe-inline-tag">
+            <i data-lucide="cooking-pot"></i> Saucepan
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="globe"></i> African
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="square"></i> Tofu
+          </span>
+        </div>
+      </div>
+      <div class="yield-scaler">
+        <span class="meta-label">Servings</span>
+        <div class="scale-controls">
+          <button class="btn-scale" aria-label="Decrease">−</button>
+          <span class="scale-qty">4</span>
+          <button class="btn-scale" aria-label="Increase">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Note -->
+    <p class="recipe-description">Berbere-braised tofu in the tradition of Doro W'at — same bold spice foundation, same deep color, swapping chicken for tofu with results that hold up beautifully.</p>
+
+    <!-- Ingredients Checklist Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 package extra firm tofu, cut into ½-inch cubes</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 cups sweet onion, finely diced</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">¼ cup berbere</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 tsp ground cardamom</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 tsp garlic powder</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">½ tbsp fresh ginger, finely grated</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 tsp fenugreek powder</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 cups vegetable broth</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 tbsp butter or canola oil</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">½–1 tsp salt, to taste</span>
+          </label>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Instructions Sequential Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Preparation</h3>
+      <ol class="instructions-list">
+        <li>
+          <span class="step-number">01</span>
+          <p class="step-text">Place the onion, berbere, cardamom, garlic powder, ginger, fenugreek, and butter or oil in a nonstick wok or large skillet. Cook over medium heat, stirring often, until the onions have softened, about 5–7 minutes.</p>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <p class="step-text">Add the tofu and vegetable broth and stir until everything is well combined. Bring to a boil, then reduce heat to medium.</p>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <p class="step-text">Cook uncovered for 20–25 minutes, stirring occasionally to prevent sticking. The sauce is ready when it clings to the back of a wooden spoon. Season with salt to taste — some berbere blends already contain salt, so taste before adding.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Tips and Notes Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Tips and Notes</h3>
+      <ul class="tips-list">
+        <li>Berbere varies a lot by brand — some are saltier or hotter than others. Taste yours before you start and adjust accordingly. If you can find it, a good store-bought berbere is the biggest flavor lever in this dish.</li>
+        <li>Great served over rice or with flatbread to soak up the sauce.</li>
+      </ul>
+    </section>
+  </article>
+</main>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>
