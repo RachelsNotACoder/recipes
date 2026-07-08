@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicken Paprikash and Hungarian Baked Cauliflower — Rachel's Recipes</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-white:     #FFFFFF; /* Canvas background */
+  --color-stone:     #F7F5F2; /* Alternate sections, card boxes */
+  --color-fog:       #E8E4DF; /* Clean lines, horizontal dividers */
+  --color-ink:       #1C1C1A; /* Primary text, headers */
+  --color-ash:       #9E9890; /* Secondary metadata, list subtext */
+
+  --color-sage:      #5C7A62; /* Tag accent */
+  --color-sage-lt:   #EAF0EB;
+  --color-brick:     #8C3B32; /* Primary header background & action element */
+  --color-brick-lt:  #F7EBEA;
+
+  --font-display:    'DM Serif Display', Georgia, serif;
+  --font-body:       'DM Sans', system-ui, sans-serif;
+
+  --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px;
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --transition: 0.2s ease-in-out;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-white);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+:focus-visible { outline: 2px solid var(--color-brick); outline-offset: 2px; }
+
+/* Brick Header */
+.site-header {
+  background: var(--color-brick);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.header-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  text-decoration: none;
+}
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-stone);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.nav-link:hover { color: var(--color-white); }
+
+/* Template B: Recipe Detail Page */
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.recipe-main-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-bottom: var(--space-lg);
+}
+
+/* Feature Block Styling */
+.metadata-feature-card {
+  background: var(--color-stone);
+  border: 1px solid var(--color-fog);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.meta-item-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-fog);
+  padding-bottom: var(--space-xs);
+}
+.meta-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ash);
+}
+.meta-value {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.text-sage { color: var(--color-sage); }
+
+/* Multi-Tag Container System */
+.meta-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.recipe-inline-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-sage);
+  background: var(--color-sage-lt);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+.recipe-inline-tag svg,
+.recipe-inline-tag [data-lucide] {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5px;
+}
+
+/* Servings Scaler Subcomponent */
+.yield-scaler {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.scale-controls { display: flex; align-items: center; gap: var(--space-md); }
+.btn-scale {
+  background: transparent; border: none; font-size: 16px; cursor: pointer;
+  width: 24px; height: 24px; color: var(--color-ink);
+}
+.btn-scale:hover { color: var(--color-brick); }
+.scale-qty { font-weight: 500; font-size: 14px; min-width: 16px; text-align: center; }
+
+/* Article Text Bodies */
+.recipe-description {
+  font-size: 15px;
+  color: var(--color-ink);
+  margin-bottom: var(--space-xl);
+  font-style: italic;
+}
+.recipe-section { margin-bottom: var(--space-xl); }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+/* Ingredients Checklist Mechanics */
+.ingredients-list { list-style: none; }
+.ingredients-list li { margin-bottom: var(--space-md); }
+.ingredient-label { display: flex; align-items: flex-start; gap: var(--space-md); cursor: pointer; position: relative; }
+.ingredient-checkbox { position: absolute; opacity: 0; width: 0; height: 0; }
+.chk-custom {
+  width: 18px; height: 18px; border: 1px solid var(--color-fog);
+  border-radius: var(--radius-sm); background: var(--color-white);
+  margin-top: 2px; flex-shrink: 0; transition: all var(--transition);
+}
+.ingredient-checkbox:checked + .chk-custom { background: var(--color-sage-lt); border-color: var(--color-sage); }
+.ingredient-checkbox:checked ~ .ingredient-text { color: var(--color-ash); text-decoration: line-through; }
+.ingredient-text { font-size: 15px; color: var(--color-ink); }
+
+/* Preparation Steps Lists */
+.instructions-list { list-style: none; }
+.instructions-list li { display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); }
+.step-number {
+  font-family: var(--font-body); font-size: 12px; font-weight: 700;
+  color: var(--color-brick); margin-top: 3px;
+}
+.step-text { font-size: 15px; color: var(--color-ink); }
+
+/* Tips list, styled to match Template B section conventions */
+.tips-list { list-style: none; }
+.tips-list li {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-stone);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+.tips-list li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-sage);
+  margin-top: 8px;
+}
+
+/* Nutrition table, styled to match Template B section conventions */
+.nutrition-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--color-fog);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.nutrition-table td {
+  padding: 10px var(--space-md);
+  border-bottom: 1px solid var(--color-fog);
+  font-size: 14px;
+}
+.nutrition-table tr:last-child td { border-bottom: none; }
+.nutrition-table tr.calories td {
+  font-family: var(--font-display);
+  font-size: 20px;
+  background: var(--color-stone);
+}
+.nutrition-table td.label-strong { font-weight: 500; color: var(--color-ink); }
+.nutrition-table td.pct {
+  text-align: right;
+  font-weight: 500;
+  color: var(--color-sage);
+  width: 60px;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-container">
+    <a href="/" class="site-logo">Rachel's Recipes</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Index</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <article class="recipe-detail">
+    <!-- Header Title -->
+    <h1 class="recipe-main-title">Chicken Paprikash and Hungarian Baked Cauliflower</h1>
+
+    <!-- Hero Metadata Feature Card Block -->
+    <div class="metadata-feature-card">
+      <div class="meta-item-group">
+        <span class="meta-label">Prep / Total</span>
+        <span class="meta-value">15m / 45m</span>
+      </div>
+      <div class="meta-item-group modifiers-row">
+        <span class="meta-label">Tags</span>
+        <div class="meta-tags-list">
+          <span class="recipe-inline-tag">
+            <i data-lucide="cooking-pot"></i> Crockpot
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="globe"></i> E Europe
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="drumstick"></i> Chicken
+          </span>
+        </div>
+      </div>
+      <div class="yield-scaler">
+        <span class="meta-label">Servings</span>
+        <div class="scale-controls">
+          <button class="btn-scale" aria-label="Decrease">−</button>
+          <span class="scale-qty">6</span>
+          <button class="btn-scale" aria-label="Increase">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Note -->
+    <p class="recipe-description">Classic chicken paprikash braised in a paprika-soy pan sauce, paired with a vege-forward Hungarian side of roasted cauliflower baked under a buttered panko-yogurt crust.</p>
+
+    <!-- Ingredients Checklist Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 ½ lbs boneless skinless chicken breasts, cut to fork-sized pieces</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 tbsp olive oil, divided</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 large or 2 small onions (about 12 oz), sliced thinly</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 bell peppers, any color (about 12 oz), diced small</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">3 cloves garlic, minced</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">3 tbsp (not teaspoons!) paprika (plus extra for garnish)</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">3 tbsp all-purpose flour</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 cup chicken broth</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 tbsp soy sauce or fish sauce</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 head of cauliflower, cut into fork-sized florets</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">¾ cup panko crumbs or breadcrumbs</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 tbsp butter, melted (or non-dairy alternative)</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">¾ cup plain greek yogurt (or cultured coconut or soy milk if non-dairy)</span>
+          </label>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Instructions Sequential Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Preparation</h3>
+      <ol class="instructions-list">
+        <li>
+          <span class="step-number">01</span>
+          <p class="step-text">Preheat oven to 400’ degrees. Prepare a large baking dish by spraying with a light coat of oil, then put the cauliflower pieces in it. Bake, uncovered, for 30 minutes.</p>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <p class="step-text">Combine the panko crumbs and butter and set aside for later.</p>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <p class="step-text">Heat a large lidded skillet on medium high heat. Add the one tablespoon of the oil and chicken pieces and brown on all sides, about 5 minutes. Remove chicken to a separate plate.</p>
+        </li>
+        <li>
+          <span class="step-number">04</span>
+          <p class="step-text">Reduce the heat to medium and add the rest of the oil with the onions and peppers. Cook, stirring frequently to scrape up brown bits from the bottom of the pan, about 5 minutes.</p>
+        </li>
+        <li>
+          <span class="step-number">05</span>
+          <p class="step-text">Add the paprika and garlic and cook, stirring constantly, until the aromas bloom, about 1 minute. Stir in the flour first, then pour in the chicken broth with the soy sauce. Stir to combine, then reduce the heat to medium low and nestle the chicken back into the pan with the vegetables and sauce. Cook on medium low until the liquid has reduced and the sauce has thickened, about 15 minutes.</p>
+        </li>
+        <li>
+          <span class="step-number">06</span>
+          <p class="step-text">While the chicken is on its final braising step above, remove the cauliflower from the oven and toss it with the yogurt (or the cultured non-dairy milk). Return to the baking dish and sprinkle with the buttered panko crumbs plus some extra paprika to garnish. Place under the broiler for 5 minutes to turn the crumbs a golden brown and serve with the chicken paprikash.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Tips and Notes Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Tips and Notes</h3>
+      <ul class="tips-list">
+        <li>Okay, so chicken paprikash is usually served with egg noodles (or occasionally, potatoes), and you might totally do that. However, I wanted to give you a more vege-tastic option, so I looked around for Hungarian veggie dishes that would go well with it. This cauliflower does the trick, and it's quite tasty. Many recipes would call for steaming the cauliflower, but I just love it roasted, always. More traditionally it would be coated in sour cream, but yogurt always makes a good substitute for that and is something many people just keep on hand nowadays. Plus it's usually higher in protein (though I can't speak for the non dairy alternatives).</li>
+        <li>“Soy sauce in a Hungarian dish? Really?” you ask. Yes! All you really need is an umami bomb to make the sauce pop (it won't taste like soy sauce, I promise), and in the modern American kitchen, soy sauce is the most commonly found one. Plus it keeps well, etc. If the idea really bothers you, you can substitute a couple of tablespoons of anchovy paste or just a few mashed up anchovies straight from the can -- same difference, really.</li>
+        <li>I know I often call for smoked paprika, but this is a case where regular paprika (sometimes called “sweet” paprika) is what you really want. Smoked paprika is delicious, but tends to go better with Mediterranean dishes, and sweet paprika is more authentic here.</li>
+      </ul>
+    </section>
+
+    <!-- Nutritional Information Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Nutritional Information Per Serving</h3>
+      <table class="nutrition-table">
+        <tbody>
+          <tr class="calories"><td colspan="2">Calories 359</td></tr>
+          <tr><td class="label-strong">Total Fat 13 g</td><td></td></tr>
+          <tr><td>Saturated Fat 4 g</td><td class="pct">22%</td></tr>
+          <tr><td>Monounsaturated Fat 5 g</td><td></td></tr>
+          <tr><td>Polyunsaturated Fat 1 g</td><td></td></tr>
+          <tr><td>Trans Fat 0 g</td><td></td></tr>
+          <tr><td class="label-strong">Cholesterol 94 mg</td><td class="pct">31%</td></tr>
+          <tr><td class="label-strong">Sodium 601 mg</td><td class="pct">25%</td></tr>
+          <tr><td class="label-strong">Potassium 1135 mg</td><td class="pct">32%</td></tr>
+          <tr><td class="label-strong">Total Carbohydrate 27 g</td><td></td></tr>
+          <tr><td class="label-strong">Dietary Fiber 7 g</td><td class="pct">26%</td></tr>
+          <tr><td class="label-strong">Sugars 9 g</td><td></td></tr>
+          <tr><td class="label-strong">Protein 35 g</td><td></td></tr>
+          <tr><td>Vitamin A</td><td class="pct">76%</td></tr>
+          <tr><td>Vitamin C</td><td class="pct">202%</td></tr>
+          <tr><td>Calcium</td><td class="pct">12%</td></tr>
+          <tr><td>Iron</td><td class="pct">18%</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+</main>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rachel's Recipes — Index</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-white:     #FFFFFF; /* Canvas background */
+  --color-stone:     #F7F5F2; /* Alternate sections, card boxes */
+  --color-fog:       #E8E4DF; /* Clean lines, horizontal dividers */
+  --color-ink:       #1C1C1A; /* Primary text, headers */
+  --color-ash:       #9E9890; /* Secondary metadata, list subtext */
+
+  --color-sage:      #5C7A62; /* Tag accent */
+  --color-sage-lt:   #EAF0EB;
+  --color-brick:     #8C3B32; /* Primary header background & action element */
+  --color-brick-lt:  #F7EBEA;
+
+  --font-display:    'DM Serif Display', Georgia, serif;
+  --font-body:       'DM Sans', system-ui, sans-serif;
+
+  --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px;
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --transition: 0.2s ease-in-out;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-white);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+:focus-visible { outline: 2px solid var(--color-brick); outline-offset: 2px; }
+
+/* Brick Header */
+.site-header {
+  background: var(--color-brick);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.header-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  text-decoration: none;
+}
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-stone);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.nav-link:hover { color: var(--color-white); }
+
+/* Icon alignment inside tags/chips */
+.recipe-inline-tag,
+.badge-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.badge-toggle svg,
+.badge-toggle [data-lucide],
+.recipe-inline-tag svg,
+.recipe-inline-tag [data-lucide] {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5px;
+}
+
+/* Main Layout */
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md) var(--space-xl);
+}
+
+/* Filter Bar */
+.filter-section {
+  margin-bottom: var(--space-lg);
+}
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.badge-toggle {
+  background: var(--color-stone);
+  color: var(--color-ash);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.badge-toggle:hover {
+  border-color: var(--color-fog);
+  color: var(--color-ink);
+}
+.badge-toggle[aria-pressed="true"] {
+  background: var(--color-brick-lt);
+  color: var(--color-brick);
+  border-color: var(--color-brick);
+}
+
+.result-count {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--color-ash);
+  margin: var(--space-md) 0 var(--space-sm);
+}
+
+/* Row Styling */
+.recipe-list-section {
+  display: flex;
+  flex-direction: column;
+}
+.recipe-list-row {
+  border-bottom: 1px solid var(--color-fog);
+}
+.recipe-list-row.is-hidden {
+  display: none;
+}
+.recipe-row-link {
+  display: block;
+  padding: var(--space-md) 0;
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+.recipe-row-link:hover {
+  opacity: 0.8;
+}
+.recipe-row-title {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: var(--space-xs);
+}
+.recipe-row-meta {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-sage);
+}
+
+.no-results {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-ash);
+  padding: var(--space-lg) 0;
+  display: none;
+}
+.no-results.is-visible {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-container">
+    <a href="index.html" class="site-logo">Rachel's Recipes</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Index</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <!-- Dynamic Filter Bar -->
+  <section class="filter-section">
+    <div class="filter-group">
+      <button class="badge-toggle" data-tag="all" aria-pressed="true">All</button>
+      <button class="badge-toggle" data-tag="African" aria-pressed="false"><i data-lucide="globe"></i> African</button>
+      <button class="badge-toggle" data-tag="Asian" aria-pressed="false"><i data-lucide="globe"></i> Asian</button>
+      <button class="badge-toggle" data-tag="E Europe" aria-pressed="false"><i data-lucide="globe"></i> E Europe</button>
+      <button class="badge-toggle" data-tag="Indian" aria-pressed="false"><i data-lucide="globe"></i> Indian</button>
+      <button class="badge-toggle" data-tag="Med" aria-pressed="false"><i data-lucide="globe"></i> Med</button>
+      <button class="badge-toggle" data-tag="S Europe" aria-pressed="false"><i data-lucide="globe"></i> S Europe</button>
+      <button class="badge-toggle" data-tag="SW" aria-pressed="false"><i data-lucide="globe"></i> SW</button>
+      <button class="badge-toggle" data-tag="US" aria-pressed="false"><i data-lucide="globe"></i> US</button>
+      <button class="badge-toggle" data-tag="Crockpot" aria-pressed="false"><i data-lucide="cooking-pot"></i> Crockpot</button>
+      <button class="badge-toggle" data-tag="Saucepan" aria-pressed="false"><i data-lucide="cooking-pot"></i> Saucepan</button>
+      <button class="badge-toggle" data-tag="Sheetpan" aria-pressed="false"><i data-lucide="cooking-pot"></i> Sheetpan</button>
+      <button class="badge-toggle" data-tag="Skillet" aria-pressed="false"><i data-lucide="cooking-pot"></i> Skillet</button>
+      <button class="badge-toggle" data-tag="Stockpot" aria-pressed="false"><i data-lucide="cooking-pot"></i> Stockpot</button>
+      <button class="badge-toggle" data-tag="Beef" aria-pressed="false"><i data-lucide="beef"></i> Beef</button>
+      <button class="badge-toggle" data-tag="Chicken" aria-pressed="false"><i data-lucide="drumstick"></i> Chicken</button>
+      <button class="badge-toggle" data-tag="Eggs" aria-pressed="false"><i data-lucide="egg"></i> Eggs</button>
+      <button class="badge-toggle" data-tag="Lamb" aria-pressed="false"><i data-lucide="beef"></i> Lamb</button>
+      <button class="badge-toggle" data-tag="Pork" aria-pressed="false"><i data-lucide="beef"></i> Pork</button>
+      <button class="badge-toggle" data-tag="Salmon" aria-pressed="false"><i data-lucide="fish"></i> Salmon</button>
+      <button class="badge-toggle" data-tag="Sausage" aria-pressed="false"><i data-lucide="link"></i> Sausage</button>
+      <button class="badge-toggle" data-tag="Shellfish" aria-pressed="false"><i data-lucide="fish"></i> Shellfish</button>
+      <button class="badge-toggle" data-tag="White Fish" aria-pressed="false"><i data-lucide="fish"></i> White Fish</button>
+      <button class="badge-toggle" data-tag="Mixed" aria-pressed="false"><i data-lucide="blend"></i> Mixed</button>
+      <button class="badge-toggle" data-tag="Multi" aria-pressed="false"><i data-lucide="blend"></i> Multi</button>
+    </div>
+  </section>
+
+  <p class="result-count" id="resultCount">35 recipes</p>
+
+  <!-- Recipe Row List -->
+  <section class="recipe-list-section" id="recipeList">
+    <div class="recipe-list-row" data-tags="Skillet|Indian|Chicken|Beef|Lamb">
+      <a href="aloo-keema-curried-meat-and-potatoes.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Aloo Keema (Curried Ground Meat and Potato)</h2>
+        <span class="recipe-row-meta">Skillet &middot; Indian &middot; Chicken &middot; Beef &middot; Lamb &middot; 40m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Skillet|US|Chicken">
+      <a href="balsamic-braised-chicken-w-zucchini-eggplant-and-tomato.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Balsamic Braised Chicken w Zucchini, Eggplant and Tomato</h2>
+        <span class="recipe-row-meta">Skillet &middot; US &middot; Chicken &middot; 1h</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|US|Salmon">
+      <a href="broiled-salmon-with-fennel-peppers-and-olives.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Broiled Salmon with Fennel, Peppers and Olives</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; US &middot; Salmon &middot; 25m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Saucepan|Asian|Chicken">
+      <a href="burmese-tomato-lemongrass-chicken-soup.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Burmese Tomato-Lemongrass Chicken Soup</h2>
+        <span class="recipe-row-meta">Saucepan &middot; Asian &middot; Chicken &middot; 40m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Mixed|US|Chicken">
+      <a href="chicken-and-lentil-salad-w-oranges.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Chicken and Lentil Salad w Oranges</h2>
+        <span class="recipe-row-meta">Mixed &middot; US &middot; Chicken &middot; 1h</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|Med|Chicken">
+      <a href="chicken-koobideh-w-roasted-tomatoes-and-saffron-cauliflower.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Chicken Koobideh w Roasted Tomatoes and Saffron Cauliflower</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; Med &middot; Chicken &middot; 1h 30m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Crockpot|E Europe|Chicken">
+      <a href="chicken-paprikash.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Chicken Paprikash and Hungarian Baked Cauliflower</h2>
+        <span class="recipe-row-meta">Crockpot &middot; E Europe &middot; Chicken &middot; 45m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Crockpot|US|Sausage">
+      <a href="crockpot-lentil-and-sausage-soup.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Crockpot Lentil and Sausage Soup</h2>
+        <span class="recipe-row-meta">Crockpot &middot; US &middot; Sausage &middot; 8h</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|US|Pork">
+      <a href="dijon-lemon-pork-chops-and-roasted-red-cabbage.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Pork Chops and Dijon-Lemon Roasted Red Cabbage</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; US &middot; Pork &middot; 40m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Saucepan|Indian|Chicken">
+      <a href="eggplant-dal-w-chicken-and-greens.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Eggplant Dal w Chicken and Greens</h2>
+        <span class="recipe-row-meta">Saucepan &middot; Indian &middot; Chicken &middot; 45m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|Indian|Chicken">
+      <a href="foil-packet-chicken-tikka-and-aloo-gobi.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Foil Packet Chicken Tikka and Aloo Gobi</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; Indian &middot; Chicken &middot; 1h</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|US|Pork">
+      <a href="foil-packet-pork-chops-w-zucchini-tomato-and-chickpeas.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Foil Packet Pork Chops w Zucchini, Tomatoes and Chickpeas</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; US &middot; Pork &middot; 50m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|Asian|Pork">
+      <a href="gingery-pork-meatballs.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Gingery Pork Meatballs with Bok Choy, Peppers, and Onions</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; Asian &middot; Pork &middot; 1h 5m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Skillet|Asian|Shellfish">
+      <a href="korean-shrimp-skillet.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Korean Shrimp Skillet</h2>
+        <span class="recipe-row-meta">Skillet &middot; Asian &middot; Shellfish &middot; 25m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|US|Beef|Lamb">
+      <a href="lamb-kebabs-w-garam-masala-marinade.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Lamb (or Beef) Kebabs w Garam Masala Marinade</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; US &middot; Beef &middot; Lamb &middot; 40m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Crockpot|US|Beef">
+      <a href="lazy-slow-cooker-unstuffed-cabbage.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Lazy Slow Cooker “Unstuffed” Cabbage</h2>
+        <span class="recipe-row-meta">Crockpot &middot; US &middot; Beef &middot; 6h 30m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Saucepan|Med|Beef">
+      <a href="lebanese-beef-and-eggplant.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Lebanese Beef and Eggplant</h2>
+        <span class="recipe-row-meta">Saucepan &middot; Med &middot; Beef &middot; 50m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|S Europe|Chicken">
+      <a href="lemon-olive-chicken-roasted-w-broccoli.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Lemon Olive Chicken Roasted with Broccoli</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; S Europe &middot; Chicken &middot; 1h</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Stockpot|Asian|White Fish">
+      <a href="lemongrass-and-lime-fish-soup.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Lemongrass and Lime Fish Soup</h2>
+        <span class="recipe-row-meta">Stockpot &middot; Asian &middot; White Fish &middot; 35m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Saucepan|S Europe|Sausage">
+      <a href="lentils-w-italian-sausage-and-fennel.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Lentils w Italian Sausage and Fennel</h2>
+        <span class="recipe-row-meta">Saucepan &middot; S Europe &middot; Sausage &middot; 1h 15m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Stockpot|S Europe|Salmon">
+      <a href="mediterranean-farro-bowl-with-salmon.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Mediterranean Farro Bowl with Salmon</h2>
+        <span class="recipe-row-meta">Stockpot &middot; S Europe &middot; Salmon &middot; 55m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Skillet|Med|Beef">
+      <a href="middle-eastern-beef-and-eggplant-skillet.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Middle Eastern Beef and Eggplant Skillet</h2>
+        <span class="recipe-row-meta">Skillet &middot; Med &middot; Beef &middot; 35m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|African|Chicken">
+      <a href="north-african-spiced-roasted-chicken-thighs-and-vegetable-medley.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">North African Spiced Roasted Chicken and Vegetable Medley</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; African &middot; Chicken &middot; 1h</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Skillet|S Europe|Chicken">
+      <a href="olive-chicken-with-chickpeas.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Olive Chicken with Chickpeas</h2>
+        <span class="recipe-row-meta">Skillet &middot; S Europe &middot; Chicken &middot; 30m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Stockpot|SW|Pork">
+      <a href="pork-chili-w-lotsa-veggies.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Pork Chili w Lotsa Veggies</h2>
+        <span class="recipe-row-meta">Stockpot &middot; SW &middot; Pork &middot; 1h</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Saucepan|S Europe|White Fish">
+      <a href="saffron-perfumed-fish-chowder.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Saffron-Perfumed Fish Chowder</h2>
+        <span class="recipe-row-meta">Saucepan &middot; S Europe &middot; White Fish &middot; 35m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Skillet|Asian|Lamb">
+      <a href="scallion-lamb.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Scallion Lamb</h2>
+        <span class="recipe-row-meta">Skillet &middot; Asian &middot; Lamb &middot; 45m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Mixed|US|Shellfish|Eggs">
+      <a href="shrimp-w-oatmeal-risotto-carbonara.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Shrimp w Oatmeal “Risotto” Carbonara</h2>
+        <span class="recipe-row-meta">Mixed &middot; US &middot; Shellfish &middot; Eggs &middot; 35m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Crockpot|SW|Chicken">
+      <a href="slow-cooker-taco-chicken-chili.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Slow Cooker “Taco” Chicken Chili</h2>
+        <span class="recipe-row-meta">Crockpot &middot; SW &middot; Chicken &middot; 7h 45m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Stockpot|SW|Chicken">
+      <a href="southwest-chicken-soup.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Southwest Chicken Soup</h2>
+        <span class="recipe-row-meta">Stockpot &middot; SW &middot; Chicken &middot; 1h 30m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Skillet|S Europe|Chicken">
+      <a href="stinky-chicken.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Stinky Chicken</h2>
+        <span class="recipe-row-meta">Skillet &middot; S Europe &middot; Chicken &middot; 35m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Skillet|Asian|White Fish">
+      <a href="vietnamese-fish-and-sweet-potato-stir-fry.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Vietnamese Fish and Sweet Potato Stir Fry</h2>
+        <span class="recipe-row-meta">Skillet &middot; Asian &middot; White Fish &middot; 30m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Sheetpan|Asian|Pork">
+      <a href="wasabi-panko-pork-w-broccoli-and-sweet-potato.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Wasabi-Mustard Pork w/ Broccoli and Sweet Potato</h2>
+        <span class="recipe-row-meta">Sheetpan &middot; Asian &middot; Pork &middot; 1h 30m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Multi|Asian|Pork">
+      <a href="wasabi-pork-meatballs-w-edamame-succotash.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">Wasabi Pork Meatballs w Edamame “Succotash”</h2>
+        <span class="recipe-row-meta">Multi &middot; Asian &middot; Pork &middot; 1h 5m</span>
+      </a>
+    </div>
+    <div class="recipe-list-row" data-tags="Crockpot|African|Chicken">
+      <a href="west-african-peanut-and-chicken-crockpot-curry.html" class="recipe-row-link">
+        <h2 class="recipe-row-title">West African Peanut and Chicken Crockpot Curry</h2>
+        <span class="recipe-row-meta">Crockpot &middot; African &middot; Chicken &middot; 6h 15m</span>
+      </a>
+    </div>
+  </section>
+
+  <p class="no-results" id="noResults">No recipes match the selected tags.</p>
+</main>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+lucide.createIcons();
+
+(function() {
+  var selected = new Set();
+  var buttons = Array.from(document.querySelectorAll('.badge-toggle'));
+  var rows = Array.from(document.querySelectorAll('.recipe-list-row'));
+  var countEl = document.getElementById('resultCount');
+  var noResultsEl = document.getElementById('noResults');
+
+  function applyFilter() {
+    var visible = 0;
+    rows.forEach(function(row) {
+      var tags = row.getAttribute('data-tags').split('|');
+      var matches = selected.size === 0 || Array.from(selected).every(function(t) {
+        return tags.indexOf(t) !== -1;
+      });
+      row.classList.toggle('is-hidden', !matches);
+      if (matches) visible++;
+    });
+    countEl.textContent = visible + (visible === 1 ? ' recipe' : ' recipes');
+    noResultsEl.classList.toggle('is-visible', visible === 0);
+  }
+
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tag = btn.getAttribute('data-tag');
+      if (tag === 'all') {
+        selected.clear();
+        buttons.forEach(function(b) { b.setAttribute('aria-pressed', b.getAttribute('data-tag') === 'all' ? 'true' : 'false'); });
+      } else {
+        if (selected.has(tag)) {
+          selected.delete(tag);
+          btn.setAttribute('aria-pressed', 'false');
+        } else {
+          selected.add(tag);
+          btn.setAttribute('aria-pressed', 'true');
+        }
+        var allBtn = document.querySelector('.badge-toggle[data-tag="all"]');
+        allBtn.setAttribute('aria-pressed', selected.size === 0 ? 'true' : 'false');
+      }
+      applyFilter();
+    });
+  });
+
+  applyFilter();
+})();
+</script>
+
+</body>
+</html>
