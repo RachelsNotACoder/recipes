@@ -1,407 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shrimp & Bacon Okonomiyaki</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shrimp &amp; Bacon Okonomiyaki — Rachel's Recipes</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-white:     #FFFFFF; /* Canvas background */
+  --color-stone:     #F7F5F2; /* Alternate sections, card boxes */
+  --color-fog:       #E8E4DF; /* Clean lines, horizontal dividers */
+  --color-ink:       #1C1C1A; /* Primary text, headers */
+  --color-ash:       #9E9890; /* Secondary metadata, list subtext */
 
-    :root {
-      --color-white:    #FFFFFF;
-      --color-stone:    #F7F5F2;
-      --color-fog:      #E8E4DF;
-      --color-ash:      #9E9890;
-      --color-ink:      #1C1C1A;
-      --color-sage:     #5C7A62;
-      --color-sage-lt:  #EAF0EB;
+  --color-sage:      #5C7A62; /* Tag accent */
+  --color-sage-lt:   #EAF0EB;
+  --color-brick:     #8C3B32; /* Primary header background & action element */
+  --color-brick-lt:  #F7EBEA;
 
-      --font-display: 'DM Serif Display', Georgia, serif;
-      --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-display:    'DM Serif Display', Georgia, serif;
+  --font-body:       'DM Sans', system-ui, sans-serif;
 
-      --space-xs:   4px;
-      --space-sm:   8px;
-      --space-md:   16px;
-      --space-lg:   24px;
-      --space-xl:   40px;
-      --space-2xl:  64px;
-      --space-3xl:  80px;
+  --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px;
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --transition: 0.2s ease-in-out;
+}
 
-      --max-width:  960px;
-      --radius-sm:  4px;
-      --radius-md:  6px;
-      --radius-lg:  8px;
-    }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-white);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+:focus-visible { outline: 2px solid var(--color-brick); outline-offset: 2px; }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--color-white);
-      color: var(--color-ink);
-      font-size: 16px;
-      line-height: 1.6;
-    }
+/* Brick Header */
+.site-header {
+  background: var(--color-brick);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.header-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  text-decoration: none;
+}
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-stone);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.nav-link:hover { color: var(--color-white); }
 
-    .page {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: var(--space-3xl) var(--space-lg);
-    }
+/* Template B: Recipe Detail Page */
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+}
 
-    /* ── Header ── */
-    .recipe-header {
-      border-bottom: 1px solid var(--color-fog);
-      padding-bottom: var(--space-xl);
-      margin-bottom: var(--space-xl);
-    }
+.recipe-main-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-bottom: var(--space-lg);
+}
 
-    .eyebrow {
-      font-family: var(--font-body);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-ash);
-      margin-bottom: var(--space-sm);
-    }
+/* Feature Block Styling */
+.metadata-feature-card {
+  background: var(--color-stone);
+  border: 1px solid var(--color-fog);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.meta-item-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-fog);
+  padding-bottom: var(--space-xs);
+}
+.meta-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ash);
+}
+.meta-value {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.text-sage { color: var(--color-sage); }
 
-    .recipe-title {
-      font-family: var(--font-display);
-      font-size: clamp(32px, 5vw, 48px);
-      line-height: 1.1;
-      color: var(--color-ink);
-      margin-bottom: var(--space-sm);
-    }
+/* Multi-Tag Container System */
+.meta-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.recipe-inline-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-sage);
+  background: var(--color-sage-lt);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+.recipe-inline-tag svg,
+.recipe-inline-tag [data-lucide] {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5px;
+}
 
-    .recipe-subtitle {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-style: italic;
-      color: var(--color-sage);
-      margin-bottom: var(--space-md);
-    }
+/* Servings Scaler Subcomponent */
+.yield-scaler {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.scale-controls { display: flex; align-items: center; gap: var(--space-md); }
+.btn-scale {
+  background: transparent; border: none; font-size: 16px; cursor: pointer;
+  width: 24px; height: 24px; color: var(--color-ink);
+}
+.btn-scale:hover { color: var(--color-brick); }
+.scale-qty { font-weight: 500; font-size: 14px; min-width: 16px; text-align: center; }
 
-    .recipe-source {
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--color-ash);
-    }
+/* Article Text Bodies */
+.recipe-description {
+  font-size: 15px;
+  color: var(--color-ink);
+  margin-bottom: var(--space-xl);
+  font-style: italic;
+}
+.recipe-section { margin-bottom: var(--space-xl); }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
 
-    /* ── Meta strip ── */
-    .meta-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-xl);
-      background: var(--color-stone);
-      padding: var(--space-lg) var(--space-xl);
-      border-radius: var(--radius-lg);
-      margin-bottom: var(--space-xl);
-    }
+/* Ingredients Checklist Mechanics */
+.ingredients-list { list-style: none; }
+.ingredients-list li { margin-bottom: var(--space-md); }
+.ingredient-label { display: flex; align-items: flex-start; gap: var(--space-md); cursor: pointer; position: relative; }
+.ingredient-checkbox { position: absolute; opacity: 0; width: 0; height: 0; }
+.chk-custom {
+  width: 18px; height: 18px; border: 1px solid var(--color-fog);
+  border-radius: var(--radius-sm); background: var(--color-white);
+  margin-top: 2px; flex-shrink: 0; transition: all var(--transition);
+}
+.ingredient-checkbox:checked + .chk-custom { background: var(--color-sage-lt); border-color: var(--color-sage); }
+.ingredient-checkbox:checked ~ .ingredient-text { color: var(--color-ash); text-decoration: line-through; }
+.ingredient-text { font-size: 15px; color: var(--color-ink); }
 
-    .meta-item {}
+/* Preparation Steps Lists */
+.instructions-list { list-style: none; }
+.instructions-list li { display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); }
+.step-number {
+  font-family: var(--font-body); font-size: 12px; font-weight: 700;
+  color: var(--color-brick); margin-top: 3px;
+}
+.step-text { font-size: 15px; color: var(--color-ink); }
 
-    .meta-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-ash);
-      margin-bottom: var(--space-xs);
-    }
-
-    .meta-value {
-      font-family: var(--font-display);
-      font-size: 20px;
-      color: var(--color-ink);
-      line-height: 1.2;
-    }
-
-    /* ── Section label ── */
-    .section-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--color-ash);
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-lg);
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--color-fog);
-    }
-
-    /* ── Two-column layout ── */
-    .recipe-body {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: var(--space-2xl);
-      align-items: start;
-    }
-
-    /* ── Ingredients ── */
-    .ingredients {
-      background: var(--color-stone);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-    }
-
-    .ingredients .section-label {
-      margin-bottom: var(--space-md);
-    }
-
-    .ingredient-list {
-      list-style: none;
-    }
-
-    .ingredient-list li {
-      display: flex;
-      gap: var(--space-md);
-      padding: 10px 0;
-      border-bottom: 1px solid var(--color-fog);
-      font-size: 15px;
-      font-weight: 300;
-      align-items: baseline;
-    }
-
-    .ingredient-list li:last-child {
-      border-bottom: none;
-    }
-
-    .amount {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--color-sage);
-      min-width: 80px;
-      flex-shrink: 0;
-    }
-
-    .ingredient-name {
-      color: var(--color-ink);
-    }
-
-    /* ── Steps ── */
-    .steps {}
-
-    .step {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 0 var(--space-md);
-      margin-bottom: var(--space-lg);
-    }
-
-    .step-number {
-      font-family: var(--font-display);
-      font-size: 32px;
-      color: var(--color-fog);
-      line-height: 1;
-      text-align: right;
-      padding-top: 2px;
-    }
-
-    .step-card {
-      border: 1px solid var(--color-fog);
-      border-radius: var(--radius-md);
-      padding: var(--space-md) var(--space-lg);
-    }
-
-    .step-title {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-ash);
-      margin-bottom: var(--space-xs);
-    }
-
-    .step-body {
-      font-size: 15px;
-      font-weight: 300;
-      line-height: 1.65;
-      color: var(--color-ink);
-    }
-
-    .timer {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: var(--space-sm);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-sage);
-    }
-
-    .timer::before {
-      content: '⏱';
-      font-style: normal;
-    }
-
-    /* ── Notes ── */
-    .notes-section {
-      margin-top: var(--space-xl);
-      grid-column: 1 / -1;
-    }
-
-    .notes-card {
-      border-left: 3px solid var(--color-sage);
-      background: var(--color-sage-lt);
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      padding: var(--space-md) var(--space-lg);
-      font-size: 14px;
-      font-weight: 300;
-      color: var(--color-ink);
-      line-height: 1.65;
-    }
-
-    .notes-card strong {
-      font-weight: 500;
-    }
-
-    /* ── Footer ── */
-    .recipe-footer {
-      margin-top: var(--space-2xl);
-      border-top: 1px solid var(--color-fog);
-      padding-top: var(--space-md);
-      font-size: 12px;
-      font-weight: 300;
-      color: var(--color-ash);
-    }
-
-    @media (max-width: 680px) {
-      .page { padding: var(--space-2xl) var(--space-md); }
-      .recipe-body { grid-template-columns: 1fr; gap: var(--space-xl); }
-      .meta-strip { gap: var(--space-lg); }
-      .notes-section { grid-column: 1; }
-    }
-  </style>
+/* Tips list, styled to match Template B section conventions */
+.tips-list { list-style: none; }
+.tips-list li {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-stone);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+.tips-list li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-sage);
+  margin-top: 8px;
+}
+</style>
 </head>
 <body>
-  <div class="page">
 
-    <div class="recipe-header">
-      <div class="eyebrow">Japanese Savory Pancake</div>
-      <h1 class="recipe-title">Shrimp &amp; Bacon<br>Okonomiyaki</h1>
-      <p class="recipe-subtitle">Simple, salty, deeply satisfying.</p>
-      <p class="recipe-source">Adapted from Serious Eats / J. Kenji López-Alt — halved for one generous serving</p>
-    </div>
-
-    <div class="meta-strip">
-      <div class="meta-item">
-        <div class="meta-label">Serves</div>
-        <div class="meta-value">1</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Active time</div>
-        <div class="meta-value">~15 min</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Cook time</div>
-        <div class="meta-value">~20 min</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Pan</div>
-        <div class="meta-value">10" nonstick</div>
-      </div>
-    </div>
-
-    <div class="recipe-body">
-
-      <!-- Ingredients -->
-      <aside class="ingredients">
-        <div class="section-label">Ingredients</div>
-        <ul class="ingredient-list">
-          <li><span class="amount">2 packed cups</span><span class="ingredient-name">cabbage, finely shredded</span></li>
-          <li><span class="amount">1</span><span class="ingredient-name">large egg</span></li>
-          <li><span class="amount">¼ cup</span><span class="ingredient-name">cold water</span></li>
-          <li><span class="amount">⅜ cup</span><span class="ingredient-name">all-purpose flour</span></li>
-          <li><span class="amount">1 tsp</span><span class="ingredient-name">soy sauce</span></li>
-          <li><span class="amount">4 oz</span><span class="ingredient-name">bacon, chopped</span></li>
-          <li><span class="amount">4 oz</span><span class="ingredient-name">shrimp, peeled, deveined, roughly chopped</span></li>
-          <li><span class="amount">¼</span><span class="ingredient-name">red onion, diced</span></li>
-          <li><span class="amount">to serve</span><span class="ingredient-name">mayo (optional)</span></li>
-        </ul>
-      </aside>
-
-      <!-- Steps -->
-      <div class="steps">
-        <div class="section-label">Method</div>
-
-        <div class="step">
-          <div class="step-number">1</div>
-          <div class="step-card">
-            <div class="step-title">Make the batter</div>
-            <div class="step-body">Combine cabbage, egg, water, flour, and soy sauce in a large bowl. Beat heavily with a fork until a thick, bubbly batter forms. Set aside.</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-number">2</div>
-          <div class="step-card">
-            <div class="step-title">Cook bacon</div>
-            <div class="step-body">Add chopped bacon to a 10-inch nonstick skillet over medium heat. Cook until nearly crisp, about 6–7 minutes.</div>
-            <div class="timer">~7 min</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-number">3</div>
-          <div class="step-card">
-            <div class="step-title">Add shrimp and onion</div>
-            <div class="step-body">Add shrimp and red onion to the pan. Cook, stirring occasionally, until shrimp is just pink and the onion has softened slightly, about 2–3 minutes.</div>
-            <div class="timer">~3 min</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-number">4</div>
-          <div class="step-card">
-            <div class="step-title">Add batter and cook first side</div>
-            <div class="step-body">Pour batter over the mix-ins and spread into an even layer with a fork. Cover and cook, shaking the pan occasionally, until the bottom is crisp and well browned, about 10 minutes. Lower heat if it starts to burn.</div>
-            <div class="timer">~10 min</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-number">5</div>
-          <div class="step-card">
-            <div class="step-title">Flip and finish</div>
-            <div class="step-body">Drain any excess fat. Flip with a wide spatula — run it around the edges first to loosen. Return to heat, cover, and cook until the second side is browned and the center is set but still a little custardy, about 8 minutes.</div>
-            <div class="timer">~8 min</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-number">6</div>
-          <div class="step-card">
-            <div class="step-title">Serve</div>
-            <div class="step-body">Transfer to a plate and serve immediately. Top with mayo if you like.</div>
-          </div>
-        </div>
-
-        <div class="notes-section">
-          <div class="section-label">Notes</div>
-          <div class="notes-card">
-            <strong>The flip is the trickiest part.</strong> Run a flexible spatula around the edges to loosen before going for it. A wide spatula works fine here — no need for the lid method the original recipe calls for.
-          </div>
-        </div>
-
-      </div>
-      <!-- /steps -->
-
-    </div>
-    <!-- /recipe-body -->
-
-    <div class="recipe-footer">
-      Shrimp &amp; Bacon Okonomiyaki &nbsp;·&nbsp; adapted from Serious Eats
-    </div>
-
+<header class="site-header">
+  <div class="header-container">
+    <a href="/" class="site-logo">Rachel's Recipes</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Index</a>
+    </nav>
   </div>
+</header>
+
+<main class="main-content">
+  <article class="recipe-detail">
+    <!-- Header Title -->
+    <h1 class="recipe-main-title">Shrimp &amp; Bacon Okonomiyaki</h1>
+
+    <!-- Hero Metadata Feature Card Block -->
+    <div class="metadata-feature-card">
+      <div class="meta-item-group">
+        <span class="meta-label">Prep / Total</span>
+        <span class="meta-value">15m / 35m</span>
+      </div>
+      <div class="meta-item-group modifiers-row">
+        <span class="meta-label">Tags</span>
+        <div class="meta-tags-list">
+          <span class="recipe-inline-tag">
+            <i data-lucide="cooking-pot"></i> Skillet
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="globe"></i> Asian
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="fish"></i> Shellfish
+          </span>
+        </div>
+      </div>
+      <div class="yield-scaler">
+        <span class="meta-label">Servings</span>
+        <div class="scale-controls">
+          <button class="btn-scale" aria-label="Decrease">−</button>
+          <span class="scale-qty">1</span>
+          <button class="btn-scale" aria-label="Increase">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Note -->
+    <p class="recipe-description">A savory Japanese cabbage pancake loaded with bacon and shrimp, pan-crisped until golden on both sides — adapted from Serious Eats and J. Kenji López-Alt, halved down to one generous serving.</p>
+
+    <!-- Ingredients Checklist Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 packed cups cabbage, finely shredded</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 large egg</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">¼ cup cold water</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">⅜ cup all-purpose flour</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 tsp soy sauce</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">4 oz bacon, chopped</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">4 oz shrimp, peeled, deveined, roughly chopped</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">¼ red onion, diced</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">mayo, to serve (optional)</span>
+          </label>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Instructions Sequential Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Preparation</h3>
+      <ol class="instructions-list">
+        <li>
+          <span class="step-number">01</span>
+          <p class="step-text">Combine cabbage, egg, water, flour, and soy sauce in a large bowl. Beat heavily with a fork until a thick, bubbly batter forms. Set aside.</p>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <p class="step-text">Add chopped bacon to a 10-inch nonstick skillet over medium heat. Cook until nearly crisp, about 6–7 minutes.</p>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <p class="step-text">Add shrimp and red onion to the pan. Cook, stirring occasionally, until shrimp is just pink and the onion has softened slightly, about 2–3 minutes.</p>
+        </li>
+        <li>
+          <span class="step-number">04</span>
+          <p class="step-text">Pour batter over the mix-ins and spread into an even layer with a fork. Cover and cook, shaking the pan occasionally, until the bottom is crisp and well browned, about 10 minutes. Lower heat if it starts to burn.</p>
+        </li>
+        <li>
+          <span class="step-number">05</span>
+          <p class="step-text">Drain any excess fat. Flip with a wide spatula — run it around the edges first to loosen. Return to heat, cover, and cook until the second side is browned and the center is set but still a little custardy, about 8 minutes.</p>
+        </li>
+        <li>
+          <span class="step-number">06</span>
+          <p class="step-text">Transfer to a plate and serve immediately. Top with mayo if you like.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Tips and Notes Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Tips and Notes</h3>
+      <ul class="tips-list">
+        <li>The flip is the trickiest part — run a flexible spatula around the edges to loosen before going for it. A wide spatula works fine here; no need for the lid method the original recipe calls for.</li>
+      </ul>
+    </section>
+  </article>
+</main>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>
