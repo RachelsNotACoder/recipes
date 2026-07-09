@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baked Chicken Thighs w Artichokes, Olives and Chickpeas — Rachel's Recipes</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-white:     #FFFFFF; /* Canvas background */
+  --color-stone:     #F7F5F2; /* Alternate sections, card boxes */
+  --color-fog:       #E8E4DF; /* Clean lines, horizontal dividers */
+  --color-ink:       #1C1C1A; /* Primary text, headers */
+  --color-ash:       #9E9890; /* Secondary metadata, list subtext */
+
+  --color-sage:      #5C7A62; /* Tag accent */
+  --color-sage-lt:   #EAF0EB;
+  --color-brick:     #8C3B32; /* Primary header background & action element */
+  --color-brick-lt:  #F7EBEA;
+
+  --font-display:    'DM Serif Display', Georgia, serif;
+  --font-body:       'DM Sans', system-ui, sans-serif;
+
+  --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px;
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --transition: 0.2s ease-in-out;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-white);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+:focus-visible { outline: 2px solid var(--color-brick); outline-offset: 2px; }
+
+/* Brick Header */
+.site-header {
+  background: var(--color-brick);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.header-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  text-decoration: none;
+}
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-stone);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.nav-link:hover { color: var(--color-white); }
+
+/* Template B: Recipe Detail Page */
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.recipe-main-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-bottom: var(--space-lg);
+}
+
+/* Feature Block Styling */
+.metadata-feature-card {
+  background: var(--color-stone);
+  border: 1px solid var(--color-fog);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.meta-item-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-fog);
+  padding-bottom: var(--space-xs);
+}
+.meta-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ash);
+}
+.meta-value {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.text-sage { color: var(--color-sage); }
+
+/* Multi-Tag Container System */
+.meta-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.recipe-inline-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-sage);
+  background: var(--color-sage-lt);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+.recipe-inline-tag svg,
+.recipe-inline-tag [data-lucide] {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5px;
+}
+
+/* Servings Scaler Subcomponent */
+.yield-scaler {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.scale-controls { display: flex; align-items: center; gap: var(--space-md); }
+.btn-scale {
+  background: transparent; border: none; font-size: 16px; cursor: pointer;
+  width: 24px; height: 24px; color: var(--color-ink);
+}
+.btn-scale:hover { color: var(--color-brick); }
+.scale-qty { font-weight: 500; font-size: 14px; min-width: 16px; text-align: center; }
+
+/* Article Text Bodies */
+.recipe-description {
+  font-size: 15px;
+  color: var(--color-ink);
+  margin-bottom: var(--space-xl);
+  font-style: italic;
+}
+.recipe-section { margin-bottom: var(--space-xl); }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+/* Ingredients Checklist Mechanics */
+.ingredients-list { list-style: none; }
+.ingredients-list li { margin-bottom: var(--space-md); }
+.ingredient-label { display: flex; align-items: flex-start; gap: var(--space-md); cursor: pointer; position: relative; }
+.ingredient-checkbox { position: absolute; opacity: 0; width: 0; height: 0; }
+.chk-custom {
+  width: 18px; height: 18px; border: 1px solid var(--color-fog);
+  border-radius: var(--radius-sm); background: var(--color-white);
+  margin-top: 2px; flex-shrink: 0; transition: all var(--transition);
+}
+.ingredient-checkbox:checked + .chk-custom { background: var(--color-sage-lt); border-color: var(--color-sage); }
+.ingredient-checkbox:checked ~ .ingredient-text { color: var(--color-ash); text-decoration: line-through; }
+.ingredient-text { font-size: 15px; color: var(--color-ink); }
+
+/* Preparation Steps Lists */
+.instructions-list { list-style: none; }
+.instructions-list li { display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); }
+.step-number {
+  font-family: var(--font-body); font-size: 12px; font-weight: 700;
+  color: var(--color-brick); margin-top: 3px;
+}
+.step-text { font-size: 15px; color: var(--color-ink); }
+
+/* Tips list, styled to match Template B section conventions */
+.tips-list { list-style: none; }
+.tips-list li {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-stone);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+.tips-list li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-sage);
+  margin-top: 8px;
+}
+
+/* Nutrition table, styled to match Template B section conventions */
+.nutrition-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--color-fog);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.nutrition-table td {
+  padding: 10px var(--space-md);
+  border-bottom: 1px solid var(--color-fog);
+  font-size: 14px;
+}
+.nutrition-table tr:last-child td { border-bottom: none; }
+.nutrition-table tr.calories td {
+  font-family: var(--font-display);
+  font-size: 20px;
+  background: var(--color-stone);
+}
+.nutrition-table td.label-strong { font-weight: 500; color: var(--color-ink); }
+.nutrition-table td.pct {
+  text-align: right;
+  font-weight: 500;
+  color: var(--color-sage);
+  width: 60px;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-container">
+    <a href="/" class="site-logo">Rachel's Recipes</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Index</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <article class="recipe-detail">
+    <!-- Header Title -->
+    <h1 class="recipe-main-title">Baked Chicken Thighs w Artichokes, Olives and Chickpeas</h1>
+
+    <!-- Hero Metadata Feature Card Block -->
+    <div class="metadata-feature-card">
+      <div class="meta-item-group">
+        <span class="meta-label">Prep / Total</span>
+        <span class="meta-value">15m / 40m</span>
+      </div>
+      <div class="meta-item-group modifiers-row">
+        <span class="meta-label">Tags</span>
+        <div class="meta-tags-list">
+          <span class="recipe-inline-tag">
+            <i data-lucide="cooking-pot"></i> Skillet
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="globe"></i> US
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="drumstick"></i> Chicken
+          </span>
+        </div>
+      </div>
+      <div class="yield-scaler">
+        <span class="meta-label">Servings</span>
+        <div class="scale-controls">
+          <button class="btn-scale" aria-label="Decrease">−</button>
+          <span class="scale-qty">6</span>
+          <button class="btn-scale" aria-label="Increase">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Note -->
+    <p class="recipe-description">Skillet-seared chicken thighs finish in the oven with olives, capers, artichokes, and chickpeas in a bright lemon and rosemary pan sauce for an easy, hearty one-pan dinner.</p>
+
+    <!-- Ingredients Checklist Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 ½ lb boneless chicken thighs</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 tbsp olive oil, divided</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 small onion (about 6 oz), sliced thinly</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 tbsp garlic (about 4 cloves), minced or pressed</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 x 14 oz can of chickpeas (garbanzos), drained and rinsed</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 oz (about ½ cup) pimento-stuffed olives</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 tbsp capers, drained</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 lb frozen artichoke hearts, thawed (or 1 can / jar artichoke hearts, but be sure they are simply canned and not "marinated")</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">12 oz grape tomatoes, halved or whole</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">Juice and zest of 1 lemon</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 tsp dried rosemary (optional)</span>
+          </label>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Instructions Sequential Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Preparation</h3>
+      <ol class="instructions-list">
+        <li>
+          <span class="step-number">01</span>
+          <p class="step-text">Preheat oven to 375 degrees.</p>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <p class="step-text">Preheat an oven-proof skillet with half the olive oil and add the onions. Cook, stirring, for 2 minutes (just long enough for the onions to soften), then stir in the garlic, rosemary, and lemon zest.</p>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <p class="step-text">Immediately add the chicken thighs. Continue cooking for 1-2 minutes, then turn the chicken over and cook for another 2 minutes.</p>
+        </li>
+        <li>
+          <span class="step-number">04</span>
+          <p class="step-text">Add the chickpeas, olives, and capers and stir. Top with the artichokes and tomatoes, drizzle the lemon juice and the remaining olive oil over, and immediately remove the skillet to the oven. Bake for 20-30 minutes, or until chicken thighs reach an internal temperature of about 160-165 degrees.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Tips and Notes Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Tips and Notes</h3>
+      <ul class="tips-list">
+        <li>This easy baked chicken dish brings together three flavors that are always good together: olives, lemon and rosemary. The artichokes and chickpeas make for a hearty meal.</li>
+      </ul>
+    </section>
+
+    <!-- Nutritional Information Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Nutritional Information Per Serving</h3>
+      <table class="nutrition-table">
+        <tbody>
+          <tr class="calories"><td colspan="2">Calories 311</td></tr>
+          <tr><td class="label-strong">Total Fat 12 g</td><td></td></tr>
+          <tr><td>Saturated Fat 2 g</td><td class="pct">11%</td></tr>
+          <tr><td>Monounsaturated Fat 5 g</td><td></td></tr>
+          <tr><td>Polyunsaturated Fat 2 g</td><td></td></tr>
+          <tr><td>Trans Fat 0 g</td><td></td></tr>
+          <tr><td class="label-strong">Cholesterol 107 mg</td><td class="pct">36%</td></tr>
+          <tr><td class="label-strong">Sodium 659 mg</td><td class="pct">27%</td></tr>
+          <tr><td class="label-strong">Potassium 605 mg</td><td class="pct">17%</td></tr>
+          <tr><td class="label-strong">Total Carbohydrate 24 g</td><td></td></tr>
+          <tr><td class="label-strong">Dietary Fiber 9 g</td><td class="pct">37%</td></tr>
+          <tr><td class="label-strong">Sugars 3 g</td><td></td></tr>
+          <tr><td class="label-strong">Protein 29 g</td><td></td></tr>
+          <tr><td>Vitamin A</td><td class="pct">10%</td></tr>
+          <tr><td>Vitamin C</td><td class="pct">44%</td></tr>
+          <tr><td>Calcium</td><td class="pct">8%</td></tr>
+          <tr><td>Iron</td><td class="pct">17%</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+</main>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>

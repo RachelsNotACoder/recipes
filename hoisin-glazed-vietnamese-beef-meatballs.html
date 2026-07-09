@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoisin-Glazed Vietnamese Beef Meatballs — Rachel's Recipes</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-white:     #FFFFFF; /* Canvas background */
+  --color-stone:     #F7F5F2; /* Alternate sections, card boxes */
+  --color-fog:       #E8E4DF; /* Clean lines, horizontal dividers */
+  --color-ink:       #1C1C1A; /* Primary text, headers */
+  --color-ash:       #9E9890; /* Secondary metadata, list subtext */
+
+  --color-sage:      #5C7A62; /* Tag accent */
+  --color-sage-lt:   #EAF0EB;
+  --color-brick:     #8C3B32; /* Primary header background & action element */
+  --color-brick-lt:  #F7EBEA;
+
+  --font-display:    'DM Serif Display', Georgia, serif;
+  --font-body:       'DM Sans', system-ui, sans-serif;
+
+  --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px;
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --transition: 0.2s ease-in-out;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-white);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+:focus-visible { outline: 2px solid var(--color-brick); outline-offset: 2px; }
+
+/* Brick Header */
+.site-header {
+  background: var(--color-brick);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.header-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  text-decoration: none;
+}
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-stone);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.nav-link:hover { color: var(--color-white); }
+
+/* Template B: Recipe Detail Page */
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.recipe-main-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-bottom: var(--space-lg);
+}
+
+/* Feature Block Styling */
+.metadata-feature-card {
+  background: var(--color-stone);
+  border: 1px solid var(--color-fog);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.meta-item-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-fog);
+  padding-bottom: var(--space-xs);
+}
+.meta-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ash);
+}
+.meta-value {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.text-sage { color: var(--color-sage); }
+
+/* Multi-Tag Container System */
+.meta-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.recipe-inline-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-sage);
+  background: var(--color-sage-lt);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+.recipe-inline-tag svg,
+.recipe-inline-tag [data-lucide] {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5px;
+}
+
+/* Servings Scaler Subcomponent */
+.yield-scaler {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.scale-controls { display: flex; align-items: center; gap: var(--space-md); }
+.btn-scale {
+  background: transparent; border: none; font-size: 16px; cursor: pointer;
+  width: 24px; height: 24px; color: var(--color-ink);
+}
+.btn-scale:hover { color: var(--color-brick); }
+.scale-qty { font-weight: 500; font-size: 14px; min-width: 16px; text-align: center; }
+
+/* Article Text Bodies */
+.recipe-description {
+  font-size: 15px;
+  color: var(--color-ink);
+  margin-bottom: var(--space-xl);
+  font-style: italic;
+}
+.recipe-section { margin-bottom: var(--space-xl); }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+/* Ingredients Checklist Mechanics */
+.ingredients-list { list-style: none; }
+.ingredients-list li { margin-bottom: var(--space-md); }
+.ingredient-label { display: flex; align-items: flex-start; gap: var(--space-md); cursor: pointer; position: relative; }
+.ingredient-checkbox { position: absolute; opacity: 0; width: 0; height: 0; }
+.chk-custom {
+  width: 18px; height: 18px; border: 1px solid var(--color-fog);
+  border-radius: var(--radius-sm); background: var(--color-white);
+  margin-top: 2px; flex-shrink: 0; transition: all var(--transition);
+}
+.ingredient-checkbox:checked + .chk-custom { background: var(--color-sage-lt); border-color: var(--color-sage); }
+.ingredient-checkbox:checked ~ .ingredient-text { color: var(--color-ash); text-decoration: line-through; }
+.ingredient-text { font-size: 15px; color: var(--color-ink); }
+
+/* Preparation Steps Lists */
+.instructions-list { list-style: none; }
+.instructions-list li { display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); }
+.step-number {
+  font-family: var(--font-body); font-size: 12px; font-weight: 700;
+  color: var(--color-brick); margin-top: 3px;
+}
+.step-text { font-size: 15px; color: var(--color-ink); }
+
+/* Tips list, styled to match Template B section conventions */
+.tips-list { list-style: none; }
+.tips-list li {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-stone);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+.tips-list li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-sage);
+  margin-top: 8px;
+}
+
+/* Nutrition table, styled to match Template B section conventions */
+.nutrition-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--color-fog);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.nutrition-table td {
+  padding: 10px var(--space-md);
+  border-bottom: 1px solid var(--color-fog);
+  font-size: 14px;
+}
+.nutrition-table tr:last-child td { border-bottom: none; }
+.nutrition-table tr.calories td {
+  font-family: var(--font-display);
+  font-size: 20px;
+  background: var(--color-stone);
+}
+.nutrition-table td.label-strong { font-weight: 500; color: var(--color-ink); }
+.nutrition-table td.pct {
+  text-align: right;
+  font-weight: 500;
+  color: var(--color-sage);
+  width: 60px;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-container">
+    <a href="/" class="site-logo">Rachel's Recipes</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Index</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <article class="recipe-detail">
+    <!-- Header Title -->
+    <h1 class="recipe-main-title">Hoisin-Glazed Vietnamese Beef Meatballs</h1>
+
+    <!-- Hero Metadata Feature Card Block -->
+    <div class="metadata-feature-card">
+      <div class="meta-item-group">
+        <span class="meta-label">Prep / Total</span>
+        <span class="meta-value">20m / 45m</span>
+      </div>
+      <div class="meta-item-group modifiers-row">
+        <span class="meta-label">Tags</span>
+        <div class="meta-tags-list">
+          <span class="recipe-inline-tag">
+            <i data-lucide="cooking-pot"></i> Sheetpan
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="globe"></i> Asian
+          </span>
+          <span class="recipe-inline-tag">
+            <i data-lucide="beef"></i> Beef
+          </span>
+        </div>
+      </div>
+      <div class="yield-scaler">
+        <span class="meta-label">Servings</span>
+        <div class="scale-controls">
+          <button class="btn-scale" aria-label="Decrease">−</button>
+          <span class="scale-qty">6</span>
+          <button class="btn-scale" aria-label="Increase">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Note -->
+    <p class="recipe-description">Food-processor beef meatballs, baked hands-off and tossed in a fish sauce-hoisin glaze, served alongside quick-pickled carrots and cucumber.</p>
+
+    <!-- Ingredients Checklist Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">For veggies: 1 lb shredded carrots</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">8 oz cubed cucumber</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">¼ cup rice vinegar</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1-2 tsp sugar (to taste)</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">For meatballs: 1 ½ lbs ground beef</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">½ small onion (about 3 oz)</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 piece ginger root about the size of 1 tbsp of volume</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">4 cloves garlic</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 small chili pepper (such as thai, or a jalapeno will do)</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">½ cup fresh cilantro (weighs about 2 oz)</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 tsp honey</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 ½ tbsp fish sauce</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">For the glaze: ¼ cup hoisin sauce</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">2 tbsp soy sauce</span>
+          </label>
+        </li>
+        <li>
+          <label class="ingredient-label">
+            <input type="checkbox" class="ingredient-checkbox">
+            <span class="chk-custom"></span>
+            <span class="ingredient-text">1 tbsp fish sauce</span>
+          </label>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Instructions Sequential Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Preparation</h3>
+      <ol class="instructions-list">
+        <li>
+          <span class="step-number">01</span>
+          <p class="step-text">Combine carrots and cucumbers with the vinegar and sugar to marinate. You can do this in advance, or you can just throw everything together before you start work on the meatballs. Either way works.</p>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <p class="step-text">Preheat the oven to 425 degrees and line two rimmed sheet pans with foil for easy cleanup.</p>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <p class="step-text">Combine all the ingredients for the meatballs in your food processor. Pulse until everything is broken down and blended. You may have to scrape the sides down a couple of times in the early going. Sometimes it can be helpful to just put in the vegetable parts first and get them down to a paste or pesto, then add the meat, but it works if you just throw everything in, too. So easy!</p>
+        </li>
+        <li>
+          <span class="step-number">04</span>
+          <p class="step-text">Divide meat mixture into 24 portions and shape into meatballs. (I like to keep a bowl of cool water handy and dip my hands in frequently to help keep the meat mixture from sticking too much to my hands.) Place the meatballs on the sheet pan in a single layer.</p>
+        </li>
+        <li>
+          <span class="step-number">05</span>
+          <p class="step-text">Place the sheet pan in the oven and roast for 15-20 minutes, until they have set up.</p>
+        </li>
+        <li>
+          <span class="step-number">06</span>
+          <p class="step-text">Combine the ingredients for the sauce in a small to medium saucepan and set on medium low heat. You may want to add a tablespoon or two of water if you will have it on the stove a long time, but in any case it won't be a lot of sauce.</p>
+        </li>
+        <li>
+          <span class="step-number">07</span>
+          <p class="step-text">When you remove the meatballs from the oven, plop them in the warm sauce and toss to coat them with it thoroughly.</p>
+        </li>
+        <li>
+          <span class="step-number">08</span>
+          <p class="step-text">Serve with the marinated vegetables alone, with lettuce wraps, or with rice noodles.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Tips and Notes Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Tips and Notes</h3>
+      <ul class="tips-list">
+        <li>This recipe is adapted from The Pickled Plum. When I first made it, I was a little skeptical, since it breaks all the meatball rules: no bread binder, no egg, go ahead and overwork the meat mixture, etc. I was sure they'd turn out tough. Imagine my surprise when they didn't! These turned out just the right texture for me.</li>
+        <li>Personally, I am not a fan of frying meatballs: it seems labor intensive and messy compared to throwing them on a sheet pan and leaving them alone for a bit. But if you are a fan of fried meatballs, of course you can do that here. The original recipe on The Pickled Plum does indeed call for frying.</li>
+        <li>Usually for a meatball, burger, or meatloaf, you would want to use a higher fat ground beef, say 80/20. (I often grind my own from a cheap chuck roast). When I made this, the ground beef I had on hand and use was very lean: about 93/7. This was another reason I was expecting tough meatballs, and was surprised they didn't turn out that way! But in retrospect, I think it was because these are baked: higher fat meatballs, when baked, release a lot of grease onto the tray, and that actually can cause them to end up cooking faster, almost "frying" in the released fat.</li>
+        <li>Fair warning: this is one of those foods that smells great while you're cooking it, tastes great when you're eating it, but leftovers will stink your refrigerator up. If you don't have immediate plans for your leftovers, it might be worthwhile to freeze them instead to minimize that. Or you know, just eat them all up right away!</li>
+      </ul>
+    </section>
+
+    <!-- Nutritional Information Section -->
+    <section class="recipe-section">
+      <h3 class="section-title">Nutritional Information Per Serving <span class="text-sage">(using 90/10 lean beef)</span></h3>
+      <table class="nutrition-table">
+        <tbody>
+          <tr class="calories"><td colspan="2">Calories 287</td></tr>
+          <tr><td class="label-strong">Total Fat 12 g</td><td></td></tr>
+          <tr><td>Saturated Fat 5 g</td><td class="pct">24%</td></tr>
+          <tr><td>Monounsaturated Fat 5 g</td><td></td></tr>
+          <tr><td>Polyunsaturated Fat 1 g</td><td></td></tr>
+          <tr><td>Trans Fat 0 g</td><td></td></tr>
+          <tr><td class="label-strong">Cholesterol 74 mg</td><td class="pct">25%</td></tr>
+          <tr><td class="label-strong">Sodium 1718 mg</td><td class="pct">72%</td></tr>
+          <tr><td class="label-strong">Potassium 673 mg</td><td class="pct">19%</td></tr>
+          <tr><td class="label-strong">Total Carbohydrate 18 g</td><td></td></tr>
+          <tr><td class="label-strong">Dietary Fiber 3 g</td><td class="pct">12%</td></tr>
+          <tr><td class="label-strong">Sugars 11 g</td><td></td></tr>
+          <tr><td class="label-strong">Protein 26 g</td><td></td></tr>
+          <tr><td>Vitamin A</td><td class="pct">210%</td></tr>
+          <tr><td>Vitamin C</td><td class="pct">12%</td></tr>
+          <tr><td>Calcium</td><td class="pct">18%</td></tr>
+          <tr><td>Iron</td><td class="pct">10%</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+</main>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>
